@@ -21,7 +21,7 @@ const ProductCard = (props) => {
         source={{
           uri: image
             ? image
-            : "https://www.freeiconspng.com/images/no-image-icon",
+            : "https://cdn.pixabay.com/photo/2012/04/01/17/29/box-23649_960_720.png",
         }}
       />
       <View style={styles.card} />
