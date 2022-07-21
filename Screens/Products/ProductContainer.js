@@ -11,8 +11,10 @@ import { Container, Header, Icon, Item, Input, Text } from "native-base";
 import ProductList from "./ProductList";
 import SearchedProduct from "./SearchedProducts";
 import Banner from "../../Shared/Banner";
+import CategoryFilter from "./CategoryFilter";
 
 const data = require("../../assets/data/products.json");
+const categories = require("../../assets/data/categories.json");
 
 var { height } = Dimensions.get("window");
 
@@ -20,16 +22,25 @@ const ProductContainer = () => {
   const [products, setProducts] = useState([]);
   const [productsFiltered, setProductsFiltered] = useState([]);
   const [focus, setFocus] = useState();
+  const [categories, setCategories] = useState([]);
+  const [active, setActive] = useState();
+  const [initialState, setInitialState] = useState([]);
 
   useEffect(() => {
     setProducts(data);
     setProductsFiltered(data);
     setFocus(false);
+    setCategories(categories);
+    setActive(-1);
+    setInitialState(data);
 
     return () => {
       setProducts([]);
       setProductsFiltered([]);
       setFocus();
+      setCategories([]);
+      setActive();
+      setInitialState();
     };
   }, []);
 
@@ -63,9 +74,12 @@ const ProductContainer = () => {
       {focus == true ? (
         <SearchedProduct productsFiltered={productsFiltered}></SearchedProduct>
       ) : (
-        <View style={styles.container}>
+        <View>
           <View>
             <Banner />
+          </View>
+          <View>
+            <CategoryFilter />
           </View>
           <View style={styles.listContainer}>
             <FlatList
