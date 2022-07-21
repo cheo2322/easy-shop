@@ -1,11 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, ActivityIndicator, FlatList } from "react-native";
+import {
+  View,
+  StyleSheet,
+  ActivityIndicator,
+  FlatList,
+  Dimensions,
+} from "react-native";
 import { Container, Header, Icon, Item, Input, Text } from "native-base";
 
 import ProductList from "./ProductList";
 import SearchedProduct from "./SearchedProducts";
+import Banner from "../../Shared/Banner";
 
 const data = require("../../assets/data/products.json");
+
+var { height } = Dimensions.get("window");
 
 const ProductContainer = () => {
   const [products, setProducts] = useState([]);
@@ -48,15 +57,17 @@ const ProductContainer = () => {
             onFocus={openList}
             onChangeText={(text) => searchProduct(text)}
           />
-          {focus == true ?( <Icon onPress={onBlur} name="ios-close" />) : null}
+          {focus == true ? <Icon onPress={onBlur} name="ios-close" /> : null}
         </Item>
       </Header>
       {focus == true ? (
         <SearchedProduct productsFiltered={productsFiltered}></SearchedProduct>
       ) : (
-        <View>
-          <Text>Product Container</Text>
-          <View style={{ marginTop: 100 }}>
+        <View style={styles.container}>
+          <View>
+            <Banner />
+          </View>
+          <View style={styles.listContainer}>
             <FlatList
               numColumns={2}
               data={products}
@@ -71,5 +82,24 @@ const ProductContainer = () => {
     </Container>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flexWrap: "wrap",
+    backgroundColor: "gainsboro",
+  },
+  listContainer: {
+    height: height,
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "flex-start",
+    flexWrap: "wrap",
+    backgroundColor: "gainsboro",
+  },
+  center: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
+});
 
 export default ProductContainer;
