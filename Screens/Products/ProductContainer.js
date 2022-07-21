@@ -4,6 +4,7 @@ import {
   StyleSheet,
   ActivityIndicator,
   FlatList,
+  ScrollView,
   Dimensions,
 } from "react-native";
 import { Container, Header, Icon, Item, Input, Text } from "native-base";
@@ -32,6 +33,7 @@ const ProductContainer = () => {
     setProductsFiltered(data);
     setFocus(false);
     setCategories(productsCategories);
+    setProductsCtg(data);
     setActive(-1);
     setInitialState(data);
 
@@ -90,32 +92,35 @@ const ProductContainer = () => {
         </Item>
       </Header>
       {focus == true ? (
-        <SearchedProduct productsFiltered={productsFiltered}></SearchedProduct>
+        <SearchedProduct productsFiltered={productsFiltered} />
       ) : (
-        <View>
+        <ScrollView>
           <View>
-            <Banner />
+            <View>
+              <Banner />
+            </View>
+            <View>
+              <CategoryFilter
+                categories={categories}
+                categoryFilter={changeCtg}
+                productsCtg={productsCtg}
+                active={active}
+                setActive={setActive}
+              />
+            </View>
+            {productsCtg.length > 0 ? (
+              <View style={styles.listContainer}>
+                {productsCtg.map((item) => {
+                  return <ProductList key={item.name} item={item} />;
+                })}
+              </View>
+            ) : (
+              <View style={[styles.center, { height: height / 2 }]}>
+                <Text>No products found</Text>
+              </View>
+            )}
           </View>
-          <View>
-            <CategoryFilter
-              categories={categories}
-              categoryFilter={changeCtg}
-              productsCtg={productsCtg}
-              active={active}
-              setActive={setActive}
-            />
-          </View>
-          <View style={styles.listContainer}>
-            <FlatList
-              numColumns={2}
-              data={products}
-              renderItem={({ item }) => (
-                <ProductList key={item.id} item={item} />
-              )}
-              keyExtractor={(item) => item.name}
-            />
-          </View>
-        </View>
+        </ScrollView>
       )}
     </Container>
   );
