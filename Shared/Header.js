@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, Image, SafeAreaView } from "react-native";
+import { StyleSheet, Image, SafeAreaView, View } from "react-native";
 
 const Header = () => {
   return (
@@ -20,7 +20,6 @@ const styles = StyleSheet.create({
     alignContent: "center",
     justifyContent: "center",
     padding: 20,
-    marginTop: 80
   },
 });
 
