@@ -3,7 +3,7 @@
     "_id": {
       "$oid": "6098"
     },
-    "image": "https://i.ibb.co/zb7nHPV/1080-47F.png",
+    "image": "https://i.ibb.co/cDTqQv1/6098.png",
     "brand": "MERHEJE",
     "price": 2,
     "rating": 1,
@@ -21,7 +21,7 @@
     "_id": {
       "$oid": "1080-47F"
     },
-    "image": "https://i.ibb.co/cDTqQv1/6098.png",
+    "image": "https://i.ibb.co/zb7nHPV/1080-47F.png",
     "brand": "KARITE",
     "price": 3,
     "rating": 1,
