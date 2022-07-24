@@ -14,8 +14,8 @@ import SearchedProduct from "./SearchedProducts";
 import Banner from "../../Shared/Banner";
 import CategoryFilter from "./CategoryFilter";
 
-const data = require("../../assets/data/products.json");
-const productsCategories = require("../../assets/data/categories.json");
+const data = require("../../assets/data/products-toni.json");
+const productsCategories = require("../../assets/data/categories-toni.json");
 
 var { height } = Dimensions.get("window");
 
@@ -146,3 +146,5 @@ const styles = StyleSheet.create({
 });
 
 export default ProductContainer;
+
+/*https://ibb.co/album/BnJrkL*/

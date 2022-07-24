@@ -1,0 +1,182 @@
+[
+  {
+    "_id": {
+      "$oid": "6098"
+    },
+    "image": "https://i.ibb.co/zb7nHPV/1080-47F.png",
+    "brand": "MERHEJE",
+    "price": 2,
+    "rating": 1,
+    "numReviews": 0,
+    "isFeatured": true,
+    "name": "PINZA DE DEPILAR MERHEJE",
+    "description": "PINZA DE DEPILAR",
+    "category": {
+      "$oid": "1"
+    },
+    "countInStock": 25,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "1080-47F"
+    },
+    "image": "https://i.ibb.co/cDTqQv1/6098.png",
+    "brand": "KARITE",
+    "price": 3,
+    "rating": 1,
+    "numReviews": 0,
+    "isFeatured": true,
+    "name": "REMOVEDOR DE PIEL MUERTA ALOE VERA",
+    "description": "GEL REMOVEDOR DE PIEL MUERTA ALOE",
+    "category": {
+      "$oid": "2"
+    },
+    "countInStock": 25,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "68581-03C"
+    },
+    "image": "https://i.ibb.co/YjqvNw1/9123-V.png",
+    "brand": "KISS BEAUTY",
+    "price": 2,
+    "rating": 1,
+    "numReviews": 0,
+    "isFeatured": true,
+    "name": "GEL DE CEJAS 10 G",
+    "description": "CEL FIJADOR DE CEJAS",
+    "category": {
+      "$oid": "2"
+    },
+    "countInStock": 25,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "9123-V"
+    },
+    "image": "https://i.ibb.co/w06cGRG/68581-03-C.png",
+    "brand": "VICTORY STAR",
+    "price": 1.1,
+    "rating": 1,
+    "numReviews": 0,
+    "isFeatured": true,
+    "name": "LIP GLOSS STAR CONCHA",
+    "description": "LABIAL LIQUIDO MATTE TONOS ROJOS/ROSAS",
+    "category": {
+      "$oid": "2"
+    },
+    "countInStock": 25,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "A055"
+    },
+    "image": "https://i.ibb.co/vjGFmbP/A055.png",
+    "brand": "MENG PING",
+    "price": 2.6,
+    "rating": 1,
+    "numReviews": 0,
+    "isFeatured": true,
+    "name": "BROCHA MENG GRANDE",
+    "description": "BROCHA GRANDE MULTIUSOS",
+    "category": {
+      "$oid": "1"
+    },
+    "countInStock": 25,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "A6057"
+    },
+    "image": "https://i.ibb.co/RHF4HnW/A6057.png",
+    "brand": "MENG PING",
+    "price": 2.6,
+    "rating": 1,
+    "numReviews": 0,
+    "isFeatured": true,
+    "name": "BROCHA MP GRANDE",
+    "description": "BROCHA PARA BASE EN POLVO",
+    "category": {
+      "$oid": "1"
+    },
+    "countInStock": 25,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "AP0002"
+    },
+    "image": "https://i.ibb.co/bg9TSKz/AP0002.png",
+    "brand": "N/D",
+    "price": 1,
+    "rating": 1,
+    "numReviews": 0,
+    "isFeatured": true,
+    "name": "VINCHA BOLA LLANO #8 *DOC",
+    "description": "VINCHA BOLA LLANA COLORES SURTIDOS",
+    "category": {
+      "$oid": "1"
+    },
+    "countInStock": 25,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "AP0003"
+    },
+    "image": "https://i.ibb.co/txt36rW/AP0003.png",
+    "brand": "N/D",
+    "price": 1,
+    "rating": 1,
+    "numReviews": 0,
+    "isFeatured": true,
+    "name": "VINCHA BOLA CARITAS #11 *DOC",
+    "description": "VINCHA BOLA LLANA MEDIANA",
+    "category": {
+      "$oid": "1"
+    },
+    "countInStock": 25,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "AP0008"
+    },
+    "image": "https://i.ibb.co/30GJgHc/AP0008.png",
+    "brand": "N/D",
+    "price": 1.8,
+    "rating": 1,
+    "numReviews": 0,
+    "isFeatured": true,
+    "name": "VINCHA BOLA LLANO #20 *DOC",
+    "description": "VINCHA BOLA LLANA GRANDE",
+    "category": {
+      "$oid": "1"
+    },
+    "countInStock": 25,
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "AV0016"
+    },
+    "image": "https://i.ibb.co/3fHTG64/AV0016.png",
+    "brand": "N/D",
+    "price": 0.25,
+    "rating": 1,
+    "numReviews": 0,
+    "isFeatured": true,
+    "name": "PINZA CAFE PEQUEÑA UNIDAD",
+    "description": "PINZA IDEAL PARA CABELLO PEQUEÑA",
+    "category": {
+      "$oid": "1"
+    },
+    "countInStock": 25,
+    "__v": 0
+  }
+]

@@ -1,0 +1,13 @@
+[{
+    "_id": {
+      "$oid": "1"
+    },
+    "name": "Accesorios y Bisuteria",
+    "__v": 0
+  },{
+    "_id": {
+      "$oid": "2"
+    },
+    "name": "Cosmeticos",
+    "__v": 0
+  }]
