@@ -27,7 +27,20 @@ const SingleProduct = (props) => {
             style={styles.image}
           />
         </View>
+        <View style={styles.contentContainer}>
+          <H1 style={styles.contentHeader}>{item.name}</H1>
+          <Text style={styles.contentText}>{item.brand}</Text>
+        </View>
+        {/* TODO: Descrition, Rich description and availability */}
       </ScrollView>
+      <View style={styles.bottomContainer}>
+        <Left>
+          <Text style={styles.price}>${item.price}</Text>
+        </Left>
+        <Right>
+          <Button title="Add" />
+        </Right>
+      </View>
     </Container>
   );
 };
