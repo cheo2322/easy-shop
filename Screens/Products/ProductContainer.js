@@ -14,8 +14,8 @@ import SearchedProduct from "./SearchedProducts";
 import Banner from "../../Shared/Banner";
 import CategoryFilter from "./CategoryFilter";
 
-const data = require("../../assets/data/products-toni.json");
-const productsCategories = require("../../assets/data/categories-toni.json");
+const data = require("../../assets/data/products.json");
+const productsCategories = require("../../assets/data/categories.json");
 
 var { height } = Dimensions.get("window");
 
