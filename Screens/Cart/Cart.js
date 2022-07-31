@@ -17,7 +17,7 @@ import {
   Body,
 } from "native-base";
 import { SwipeListView } from "react-native-swipe-list-view";
-import { Icon } from "react-native-vector-icons/FontAwesome";
+import Icon from "react-native-vector-icons/FontAwesome";
 
 import CartItem from "./CartItem";
 
@@ -37,10 +37,7 @@ const Cart = (props) => {
       {props.cartItems.length ? (
         <Container>
           <H1 style={{ alignSelf: "center" }}>Cart</H1>
-          {props.cartItems.map((data) => {
-            return <CartItem item={data} />;
-          })}
-          {/* <SwipeListView
+          <SwipeListView
             data={props.cartItems}
             renderItem={(data) => <CartItem item={data} />}
             renderHiddenItem={(data) => (
@@ -60,7 +57,7 @@ const Cart = (props) => {
             leftOpenValue={75}
             stopLeftSwipe={75}
             rightOpenValue={-75}
-          /> */}
+          />
           <View style={styles.bottomContainer}>
             <Left>
               <Text style={styles.price}>$ {total}</Text>
