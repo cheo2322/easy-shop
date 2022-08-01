@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, Dimensions, ScrollView } from "react-native";
+import { View, StyleSheet, Dimensions, ScrollView, Button } from "react-native";
 import { Text, Left, Right, ListItem, Thumbnail, Body } from "native-base";
 import { connect } from "react-redux";
 import * as actions from "../../../Redux/Actions/cartActions";
@@ -8,6 +8,12 @@ import { produceWithPatches } from "immer";
 var { width, height } = Dimensions.get("window");
 
 const Confirm = (props) => {
+  const confirmOrder = () => {
+    setTimeout(() => {
+      props.clearCart();
+      props.navigation.navigate("Cart1");
+    }, 500);
+  };
   const confirm = props.route.params;
 
   return (
@@ -24,11 +30,38 @@ const Confirm = (props) => {
               <Text>Zip code:{confirm.order.order.zip}</Text>
               <Text>Country:{confirm.order.order.country}</Text>
             </View>
+            <Text style={styles.title}>Items:</Text>
+            {confirm.order.order.orderItems.map((x) => {
+              return (
+                <ListItem style={styles.listItem} key={x.product.name} avatar>
+                  <Left>
+                    <Thumbnail source={{ uri: x.product.image }} />
+                  </Left>
+                  <Body style={styles.body}>
+                    <Left>
+                      <Text>{x.product.name}</Text>
+                    </Left>
+                    <Right>
+                      <Text>$ {x.product.price}</Text>
+                    </Right>
+                  </Body>
+                </ListItem>
+              );
+            })}
           </View>
         ) : null}
+        <View style={{ alignItems: "center", margin: 20 }}>
+          <Button title={"Place order"} onPress={confirmOrder} />
+        </View>
       </View>
     </ScrollView>
   );
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    clearCart: () => dispatch(actions.clearCart()),
+  };
 };
 
 const styles = StyleSheet.create({
@@ -62,4 +95,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Confirm;
+export default connect(null, mapDispatchToProps)(Confirm);
