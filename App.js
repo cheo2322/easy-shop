@@ -1,7 +1,8 @@
 import { StatusBar } from "expo-status-bar";
-import React from "react";
+import React, { useEffect } from "react";
 import { LogBox } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
+import * as Font from "expo-font";
 
 //Redux
 import { Provider } from "react-redux";
@@ -16,6 +17,14 @@ import Header from "./Shared/Header";
 LogBox.ignoreAllLogs(true);
 
 export default function App() {
+  useEffect(() => {
+    (async () =>
+      await Font.loadAsync({
+        Roboto: require("native-base/Fonts/Roboto.ttf"),
+        Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf"),
+      }))();
+  }, []);
+
   return (
     <Provider store={store}>
       <NavigationContainer>
