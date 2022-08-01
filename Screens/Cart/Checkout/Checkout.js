@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Text, View, Button } from "react-native";
+import { View, Button } from "react-native";
 import { Item, Picker } from "native-base";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
@@ -46,6 +46,7 @@ const Checkout = (props) => {
 
     props.navigation.navigate("Payment", { order: order });
   };
+
   return (
     <KeyboardAwareScrollView
       viewIsInsideTabBar={true}
