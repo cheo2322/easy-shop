@@ -32,6 +32,8 @@ const Cart = (props) => {
     return (total += cart.product.price);
   });
 
+  total = Math.round(total * 100) / 100;
+
   return (
     <>
       {props.cartItems.length ? (
