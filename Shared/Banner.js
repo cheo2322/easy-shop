@@ -9,9 +9,12 @@ const Banner = () => {
 
   useEffect(() => {
     setBannerData([
-      "https://images.vexels.com/media/users/3/126443/preview2/ff9af1e1edfa2c4a46c43b0c2040ce52-macbook-pro-touch-bar-banner.jpg",
-      "https://pbs.twimg.com/media/D7P_yLdX4AAvJWO.jpg",
-      "https://www.yardproduct.com/blog/wp-content/uploads/2016/01/gardening-banner.jpg",
+      // "https://images.vexels.com/media/users/3/126443/preview2/ff9af1e1edfa2c4a46c43b0c2040ce52-macbook-pro-touch-bar-banner.jpg",
+      // "https://pbs.twimg.com/media/D7P_yLdX4AAvJWO.jpg",
+      // "https://www.yardproduct.com/blog/wp-content/uploads/2016/01/gardening-banner.jpg",
+      "https://i.ibb.co/HG2YtLh/Sample-1.jpg",
+      "https://i.ibb.co/fHnsTyZ/Sample-2.jpg",
+      "https://i.ibb.co/KXWrtrw/Sample-3.jpg",
     ]);
 
     return () => {

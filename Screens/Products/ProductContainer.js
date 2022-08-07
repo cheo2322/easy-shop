@@ -9,13 +9,13 @@ import {
 } from "react-native";
 import { Container, Header, Icon, Item, Input, Text } from "native-base";
 
+import baseURL from "../../assets/common/baseUrl";
+import axios from "axios";
+
 import ProductList from "./ProductList";
 import SearchedProduct from "./SearchedProducts";
 import Banner from "../../Shared/Banner";
 import CategoryFilter from "./CategoryFilter";
-
-const data = require("../../assets/data/products.json");
-const productsCategories = require("../../assets/data/categories.json");
 
 var { height } = Dimensions.get("window");
 
@@ -29,13 +29,31 @@ const ProductContainer = (props) => {
   const [initialState, setInitialState] = useState([]);
 
   useEffect(() => {
-    setProducts(data);
-    setProductsFiltered(data);
     setFocus(false);
-    setCategories(productsCategories);
-    setProductsCtg(data);
     setActive(-1);
-    setInitialState(data);
+
+    // Products
+    axios
+      .get(`${baseURL}products`)
+      .then((res) => {
+        setProducts(res.data);
+        setProductsFiltered(res.data);
+        setProductsCtg(res.data);
+        setInitialState(res.data);
+      })
+      .catch((error) => {
+        console.log("Api call error -> products");
+      });
+
+    // Categories
+    axios
+      .get(`${baseURL}categories`)
+      .then((res) => {
+        setCategories(res.data);
+      })
+      .catch((error) => {
+        console.log("Api call error -> categories");
+      });
 
     return () => {
       setProducts([]);
@@ -48,7 +66,6 @@ const ProductContainer = (props) => {
   }, []);
 
   // Products functions
-
   const searchProduct = (text) => {
     setProductsFiltered(
       products.filter((i) => i.name.toLowerCase().includes(text.toLowerCase()))
@@ -64,14 +81,13 @@ const ProductContainer = (props) => {
   };
 
   // Categories functions
-
   const changeCtg = (ctg) => {
     {
       ctg === "all"
         ? [setProductsCtg(initialState), setActive(true)]
         : [
             setProductsCtg(
-              products.filter((i) => i.category.$oid === ctg),
+              products.filter((i) => i.category._id === ctg),
               setActive(true)
             ),
           ];
