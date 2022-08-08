@@ -2,6 +2,8 @@ import { StatusBar } from "expo-status-bar";
 import React, { useEffect } from "react";
 import { LogBox } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
+import Toast from "react-native-toast-message";
+
 import * as Font from "expo-font";
 
 //Redux
@@ -30,6 +32,7 @@ export default function App() {
       <NavigationContainer>
         <Header />
         <Main />
+        <Toast />
       </NavigationContainer>
     </Provider>
   );
