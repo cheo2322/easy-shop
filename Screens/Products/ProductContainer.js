@@ -28,6 +28,7 @@ const ProductContainer = (props) => {
   const [productsCtg, setProductsCtg] = useState([]);
   const [active, setActive] = useState();
   const [initialState, setInitialState] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useFocusEffect(
     useCallback(() => {
@@ -42,6 +43,7 @@ const ProductContainer = (props) => {
           setProductsFiltered(res.data);
           setProductsCtg(res.data);
           setInitialState(res.data);
+          setLoading(false);
         })
         .catch((error) => {
           console.log("Api call error -> products");
@@ -98,59 +100,70 @@ const ProductContainer = (props) => {
   };
 
   return (
-    <Container>
-      <Header searchBar rounded>
-        <Item>
-          <Icon name="ios-search" />
-          <Input
-            placeholder="Search"
-            onFocus={openList}
-            onChangeText={(text) => searchProduct(text)}
-          />
-          {focus == true ? <Icon onPress={onBlur} name="ios-close" /> : null}
-        </Item>
-      </Header>
-      {focus == true ? (
-        <SearchedProduct
-          navigation={props.navigation}
-          productsFiltered={productsFiltered}
-        />
-      ) : (
-        <ScrollView>
-          <View>
-            <View>
-              <Banner />
-            </View>
-            <View>
-              <CategoryFilter
-                categories={categories}
-                categoryFilter={changeCtg}
-                productsCtg={productsCtg}
-                active={active}
-                setActive={setActive}
+    <>
+      {loading == false ? (
+        <Container>
+          <Header searchBar rounded>
+            <Item>
+              <Icon name="ios-search" />
+              <Input
+                placeholder="Search"
+                onFocus={openList}
+                onChangeText={(text) => searchProduct(text)}
               />
-            </View>
-            {productsCtg.length > 0 ? (
-              <View style={styles.listContainer}>
-                {productsCtg.map((item) => {
-                  return (
-                    <ProductList
-                      navigation={props.navigation}
-                      key={item.name}
-                      item={item}
-                    />
-                  );
-                })}
+              {focus == true ? (
+                <Icon onPress={onBlur} name="ios-close" />
+              ) : null}
+            </Item>
+          </Header>
+          {focus == true ? (
+            <SearchedProduct
+              navigation={props.navigation}
+              productsFiltered={productsFiltered}
+            />
+          ) : (
+            <ScrollView>
+              <View>
+                <View>
+                  <Banner />
+                </View>
+                <View>
+                  <CategoryFilter
+                    categories={categories}
+                    categoryFilter={changeCtg}
+                    productsCtg={productsCtg}
+                    active={active}
+                    setActive={setActive}
+                  />
+                </View>
+                {productsCtg.length > 0 ? (
+                  <View style={styles.listContainer}>
+                    {productsCtg.map((item) => {
+                      return (
+                        <ProductList
+                          navigation={props.navigation}
+                          key={item.name}
+                          item={item}
+                        />
+                      );
+                    })}
+                  </View>
+                ) : (
+                  <View style={[styles.center, { height: height / 2 }]}>
+                    <Text>No products found</Text>
+                  </View>
+                )}
               </View>
-            ) : (
-              <View style={[styles.center, { height: height / 2 }]}>
-                <Text>No products found</Text>
-              </View>
-            )}
-          </View>
-        </ScrollView>
+            </ScrollView>
+          )}
+        </Container>
+      ) : (
+        // Loading
+        <Container style={[styles.center, { backgroundColor: "#f2f2f2" }]}>
+          <ActivityIndicator size="large" color="red" />
+        </Container>
       )}
-    </Container>
+    </>
   );
 };
 
