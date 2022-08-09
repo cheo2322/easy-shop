@@ -31,8 +31,6 @@ const Login = (props) => {
       setError("Please, fill in your credentials");
     } else {
       loginUser(user, context.dispatch);
-
-      console.log("Login success!");
     }
   };
 

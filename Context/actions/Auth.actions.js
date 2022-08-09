@@ -1,6 +1,6 @@
 import jwt_decode from "jwt-decode";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Toast } from "react-native-toast-message/lib/src/Toast";
+import Toast from "react-native-toast-message";
 import baseURL from "../../assets/common/baseUrl";
 
 export const SET_CURRENT_USER = "SET_CURRENT_USER";
@@ -22,16 +22,19 @@ export const loginUser = (user, dispatch) => {
 
         const decoded = jwt_decode(token);
         dispatch(setCurrentUser(decoded, user));
+
+        console.log("User logged successfully.");
       } else {
         logoutUser(dispatch);
       }
     })
     .catch((err) => {
+      console.log(err);
+
       Toast.show({
         topOffset: 60,
         type: "error",
         text1: "Please provide correct credentials",
-        text2: "",
       });
 
       logoutUser(dispatch);
