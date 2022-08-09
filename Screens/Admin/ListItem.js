@@ -8,16 +8,61 @@ import {
   TouchableOpacity,
   Dimensions,
   Button,
+  Modal,
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 
 var { width } = Dimensions.get("window");
 
 const ListItem = (props) => {
+  const [modalVisible, setModalVisible] = useState(false);
+
   return (
     <View>
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(false);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <TouchableOpacity
+              underlayColor="#E8E8E8"
+              onPress={() => {
+                setModalVisible(false);
+              }}
+              style={{
+                alignSelf: "flex-end",
+                position: "absolute",
+                top: 5,
+                right: 10,
+              }}
+            >
+              <Icon name="close" color={"black"} size={20} />
+            </TouchableOpacity>
+
+            <Button
+              title="Edit"
+              onPress={() => [
+                props.navigation.navigate("ProductForm"),
+                setModalVisible(false),
+              ]}
+            />
+            <Button
+              title="Delete"
+              // Delete
+            />
+          </View>
+        </View>
+      </Modal>
       <TouchableOpacity
-        // onPress={}
+        onPress={() => {
+          props.navigation.navigate("Product Detail", { item: props });
+        }}
+        onLongPress={() => setModalVisible(true)}
         style={[
           styles.container,
           {
