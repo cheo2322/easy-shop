@@ -15,8 +15,29 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import baseURL from "../../assets/common/baseUrl";
+import ListItem from "./ListItem";
 
 var { width, height } = Dimensions.get("window");
+
+const ListHeader = () => {
+  return (
+    <View elevation={1} style={styles.listHeader}>
+      <View style={styles.headerItem}></View>
+      <View style={styles.headerItem}>
+        <Text style={{ fontWeight: "600" }}>Brand</Text>
+      </View>
+      <View style={styles.headerItem}>
+        <Text style={{ fontWeight: "600" }}>Name</Text>
+      </View>
+      <View style={styles.headerItem}>
+        <Text style={{ fontWeight: "600" }}>Category</Text>
+      </View>
+      <View style={styles.headerItem}>
+        <Text style={{ fontWeight: "600" }}>Price</Text>
+      </View>
+    </View>
+  );
+};
 
 const Products = (props) => {
   const [productList, setProductList] = useState();
@@ -50,6 +71,18 @@ const Products = (props) => {
     }, [])
   );
 
+  const searchProduct = (text) => {
+    if (text == "") {
+      setProductFilter(productList);
+    }
+
+    setProductFilter(
+      productList.filter((i) =>
+        i.name.toLowerCase().includes(text.toLowerCase())
+      )
+    );
+  };
+
   return (
     <View>
       <View>
@@ -58,20 +91,23 @@ const Products = (props) => {
             <Icon name="search" />
             <Input
               placeholder="Search"
-              // onChange
+              onChangeText={(text) => searchProduct(text)}
             />
           </Item>
         </Header>
       </View>
 
       {loading ? (
-        <View>
+        <View style={styles.spinner}>
           <ActivityIndicator size="large" color="red" />
         </View>
       ) : (
         <FlatList
           data={productFilter}
-          renderItem={({ item, index }) => <Text>{item.name}</Text>}
+          ListHeaderComponent={ListHeader}
+          renderItem={({ item, index }) => (
+            <ListItem {...item} navigation={props.navigation} index={index} />
+          )}
           keyExtractor={(item) => item.id}
         />
       )}
