@@ -1,3 +1,4 @@
+import "./ignoreWarnings";
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect } from "react";
 import { LogBox } from "react-native";
