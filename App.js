@@ -11,6 +11,9 @@ import * as Font from "expo-font";
 import { Provider } from "react-redux";
 import store from "./Redux/store";
 
+// Context API
+import Auth from "./Context/store/Auth";
+
 // Navigators
 import Main from "./Navigators/Main";
 
@@ -29,12 +32,14 @@ export default function App() {
   }, []);
 
   return (
-    <Provider store={store}>
-      <NavigationContainer>
-        <Header />
-        <Main />
-        <Toast />
-      </NavigationContainer>
-    </Provider>
+    <Auth>
+      <Provider store={store}>
+        <NavigationContainer>
+          <Header />
+          <Main />
+          <Toast />
+        </NavigationContainer>
+      </Provider>
+    </Auth>
   );
 }
