@@ -7,10 +7,11 @@ import {
   TouchableHighlight,
   TouchableOpacity,
   Dimensions,
-  Button,
   Modal,
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
+
+import EasyButton from "../../Shared/StyledComponents/EasyButton";
 
 var { width } = Dimensions.get("window");
 
@@ -44,17 +45,23 @@ const ListItem = (props) => {
               <Icon name="close" color={"black"} size={20} />
             </TouchableOpacity>
 
-            <Button
-              title="Edit"
-              onPress={() => [
+            <EasyButton
+              medium
+              secondary
+              onPress={() => {
                 props.navigation.navigate("ProductForm"),
-                setModalVisible(false),
-              ]}
-            />
-            <Button
-              title="Delete"
-              // Delete
-            />
+                  setModalVisible(false)
+              }}
+            >
+              <Text style={styles.textStyle}>Edit</Text>
+            </EasyButton>
+            <EasyButton
+              medium
+              danger
+
+            >
+              <Text style={styles.textStyle}>Delete</Text>
+            </EasyButton>
           </View>
         </View>
       </Modal>

@@ -8,6 +8,7 @@ import Error from "../../Shared/Form/Error";
 // Context
 import AuthGlobal from "../../Context/store/AuthGlobal";
 import { loginUser } from "../../Context/actions/Auth.actions";
+import EasyButton from "../../Shared/StyledComponents/EasyButton";
 
 const Login = (props) => {
   const context = useContext(AuthGlobal);
@@ -53,14 +54,19 @@ const Login = (props) => {
       />
       <View style={styles.buttonGroup}>
         {error ? <Error message={error} /> : null}
-        <Button title="Login" onPress={() => handleSubmit()} />
+        <EasyButton large primary onPress={() => handleSubmit()}>
+          <Text style={{ color: "white" }}>Login</Text>
+        </EasyButton>
       </View>
       <View style={[{ marginTop: 40 }, styles.buttonGroup]}>
         <Text style={styles.middleText}>Don't have an account yet?</Text>
-        <Button
-          title="Register"
+        <EasyButton
+          large
+          secondary
           onPress={() => props.navigation.navigate("Register")}
-        />
+        >
+          <Text style={{ color: "white" }}>Register</Text>
+        </EasyButton>
       </View>
     </FormContainer>
   );
