@@ -7,7 +7,7 @@ import {
   StyleSheet,
   Dimensions,
 } from "react-native";
-import { Header, Item, Input } from "native-base";
+import { Header, Item, Input, Container } from "native-base";
 import Icon from "react-native-vector-icons/FontAwesome";
 
 import { useFocusEffect } from "@react-navigation/native";
@@ -84,7 +84,7 @@ const Products = (props) => {
   };
 
   return (
-    <View>
+    <Container>
       <View>
         <Header searchBar rounded>
           <Item style={{ padding: 5 }}>
@@ -111,7 +111,7 @@ const Products = (props) => {
           keyExtractor={(item) => item.id}
         />
       )}
-    </View>
+    </Container>
   );
 };
 
