@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Button } from "react-native";
 
 import FormContainer from "../../Shared/Form/FormContainer";
 import Input from "../../Shared/Form/Input";
-import Error from "../../Shared/Form/Error";
+import Error from "../../Shared/Error";
 
 // Context
 import AuthGlobal from "../../Context/store/AuthGlobal";

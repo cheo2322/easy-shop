@@ -7,7 +7,7 @@ import axios from "axios";
 
 import FormContainer from "../../Shared/Form/FormContainer";
 import Input from "../../Shared/Form/Input";
-import Error from "../../Shared/Form/Error";
+import Error from "../../Shared/Error";
 import baseURL from "../../assets/common/baseUrl";
 import EasyButton from "../../Shared/StyledComponents/EasyButton";
 
