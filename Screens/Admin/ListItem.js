@@ -50,7 +50,7 @@ const ListItem = (props) => {
               secondary
               onPress={() => {
                 props.navigation.navigate("ProductForm"),
-                  setModalVisible(false)
+                  setModalVisible(false);
               }}
             >
               <Text style={styles.textStyle}>Edit</Text>
@@ -58,7 +58,7 @@ const ListItem = (props) => {
             <EasyButton
               medium
               danger
-
+              onPress={() => [props.delete(props.id), setModalVisible(false)]}
             >
               <Text style={styles.textStyle}>Delete</Text>
             </EasyButton>
