@@ -40,8 +40,23 @@ const ProductForm = (props) => {
   const [richDescription, setRichDescription] = useState();
   const [numReviews, setNumReviews] = useState(0);
   const [item, setItem] = useState(null);
+  const [sufix, setSufix] = useState("");
 
   useEffect(() => {
+    if (!props.route.params) {
+      setItem(null);
+    } else {
+      setItem(props.route.params.item);
+      setBrand(props.route.params.item.brand);
+      setName(props.route.params.item.name);
+      setPrice(props.route.params.item.price.toString());
+      setDescription(props.route.params.item.description);
+      setMainImage(props.route.params.item.image);
+      setImage(props.route.params.item.image);
+      setCategory(props.route.params.item.category._id);
+      setCountInStock(props.route.params.item.countInStock.toString());
+    }
+
     AsyncStorage.getItem("jwt")
       .then((res) => {
         setToken(res);
@@ -80,6 +95,7 @@ const ProductForm = (props) => {
     if (!result.cancelled) {
       setMainImage(result.uri);
       setImage(result.uri);
+      setSufix("file:///");
     }
   };
 
@@ -97,7 +113,7 @@ const ProductForm = (props) => {
 
     let formData = new FormData();
 
-    const newImageUri = "file:///" + image.split("file:/").join("");
+    const newImageUri = sufix + image.split("file:/").join("");
 
     formData.append("image", {
       uri: newImageUri,
@@ -115,8 +131,6 @@ const ProductForm = (props) => {
     formData.append("numReviews", numReviews);
     formData.append("isFeatured", isFeatured);
 
-    console.log(formData.entries);
-
     const config = {
       headers: {
         "Content-Type": "multipart/form-data",
@@ -124,54 +138,54 @@ const ProductForm = (props) => {
       },
     };
 
-    // if (item !== null) {
-    // axios
-    //   .put(`${baseURL}products/${item.id}`, formData, config)
-    //   .then((res) => {
-    //     if (res.status == 200 || res.status == 201) {
-    //       Toast.show({
-    //         topOffset: 60,
-    //         type: "success",
-    //         text1: "Product successfuly updated",
-    //         text2: "",
-    //       });
-    //       setTimeout(() => {
-    //         props.navigation.navigate("Products");
-    //       }, 500);
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     Toast.show({
-    //       topOffset: 60,
-    //       type: "error",
-    //       text1: "Something went wrong",
-    //       text2: "Please try again",
-    //     });
-    //   });
-    // } else {
-    axios
-      .post(`${baseURL}products`, formData, config)
-      .then((res) => {
-        if (res.status == 200 || res.status == 201) {
+    if (item !== null) {
+      axios
+        .put(`${baseURL}products/${item.id}`, formData, config)
+        .then((res) => {
+          if (res.status == 200 || res.status == 201) {
+            Toast.show({
+              topOffset: 60,
+              type: "success",
+              text1: "Product successfuly updated",
+            });
+            setTimeout(() => {
+              props.navigation.navigate("Products");
+            }, 500);
+          }
+        })
+        .catch((error) => {
           Toast.show({
             topOffset: 60,
-            type: "success",
-            text1: "New Product added",
+            type: "error",
+            text1: "Something went wrong",
+            text2: "Please try again",
           });
-          setTimeout(() => {
-            props.navigation.navigate("Products");
-          }, 500);
-        }
-      })
-      .catch((error) => {
-        Toast.show({
-          topOffset: 60,
-          type: "error",
-          text1: "Something went wrong",
-          text2: "Please try again",
         });
-      });
-    // }
+    } else {
+      axios
+        .post(`${baseURL}products`, formData, config)
+        .then((res) => {
+          if (res.status == 200 || res.status == 201) {
+            Toast.show({
+              topOffset: 60,
+              type: "success",
+              text1: "New Product added",
+            });
+            setTimeout(() => {
+              props.navigation.navigate("Products");
+            }, 500);
+          }
+        })
+        .catch((error) => {
+          Toast.show({
+            topOffset: 60,
+            type: "error",
+            text1: "Something went wrong",
+            text2: "Please try again",
+          });
+          console.error(error.response);
+        });
+    }
   };
 
   return (
@@ -190,7 +204,7 @@ const ProductForm = (props) => {
         name="brand"
         id="brand"
         value={brand}
-        onChangeText={() => setBrand(Text)}
+        onChangeText={(text) => setBrand(text)}
       />
       <View style={styles.label}>
         <Text style={{ textDecorationLine: "underline" }}>Name</Text>

@@ -49,7 +49,7 @@ const ListItem = (props) => {
               medium
               secondary
               onPress={() => {
-                props.navigation.navigate("ProductForm"),
+                props.navigation.navigate("ProductForm", { item: props }),
                   setModalVisible(false);
               }}
             >
