@@ -13,6 +13,7 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import Toast from "react-native-toast-message";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
+import * as ImagePicker from "expo-image-picker";
 
 import FormContainer from "../../Shared/Form/FormContainer";
 import Input from "../../Shared/Form/Input";
@@ -46,16 +47,39 @@ const ProductForm = (props) => {
       .then((res) => setCategories(res.data))
       .catch((error) => alert("Error to load categories"));
 
+    // Image Picker
+    (async () => {
+      if (Platform.OS !== "web") {
+        const { status } = await ImagePicker.requestCameraPermissionsAsync();
+        if (status !== "granted") {
+          alert("Sorry, we need camera roll permissions to make this work!");
+        }
+      }
+    })();
+
     return () => {
       setCategories([]);
     };
   }, []);
 
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.cancelled) {
+      setMainImage(result.uri);
+      setImage(result.uri);
+    }
+  };
   return (
     <FormContainer title="Add Product">
       <View style={styles.imageContainer}>
         <Image style={styles.image} source={{ uri: mainImage }} />
-        <TouchableOpacity style={styles.imagePicker}>
+        <TouchableOpacity onPress={pickImage} style={styles.imagePicker}>
           <Icon style={{ color: "white" }} name="camera" />
         </TouchableOpacity>
       </View>
