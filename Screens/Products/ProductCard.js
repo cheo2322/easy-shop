@@ -1,19 +1,13 @@
-import React from "react";
-import {
-  StyleSheet,
-  View,
-  Dimensions,
-  Image,
-  Text,
-} from "react-native";
-import Toast from "react-native-toast-message";
+import React from 'react';
+import { StyleSheet, View, Dimensions, Image, Text } from 'react-native';
+import Toast from 'react-native-toast-message';
 
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 
-import * as actions from "../../Redux/Actions/cartActions";
-import EasyButton from "../../Shared/StyledComponents/EasyButton";
+import * as actions from '../../Redux/Actions/cartActions';
+import EasyButton from '../../Shared/StyledComponents/EasyButton';
 
-var { width } = Dimensions.get("window");
+var { width } = Dimensions.get('window');
 
 const ProductCard = (props) => {
   const { name, price, image, countInStock } = props;
@@ -26,12 +20,12 @@ const ProductCard = (props) => {
         source={{
           uri: image
             ? image
-            : "https://cdn.pixabay.com/photo/2012/04/01/17/29/box-23649_960_720.png",
+            : 'https://cdn.pixabay.com/photo/2012/04/01/17/29/box-23649_960_720.png',
         }}
       />
       <View style={styles.card} />
       <Text style={styles.title}>
-        {name.length > 15 ? name.substring(0, 15 - 3) + "..." : name}
+        {name.length > 15 ? name.substring(0, 15 - 3) + '...' : name}
       </Text>
       <Text style={styles.price}>${price}</Text>
 
@@ -41,16 +35,16 @@ const ProductCard = (props) => {
             primary
             medium
             onPress={() => {
-              props.addItemToCart(props),
+              props.addItemToCart(props.id),
                 Toast.show({
                   topOffset: 60,
-                  type: "success",
-                  text1: `${name} added to cart`,
-                  text2: "Go to your cart to complete the order",
+                  type: 'success',
+                  text1: `${name} added to Cart`,
+                  text2: 'Go to your cart to complete order',
                 });
             }}
           >
-            <Text style={{ color: "white" }}>Add</Text>
+            <Text style={{ color: 'white' }}>Add</Text>
           </EasyButton>
         </View>
       ) : (
@@ -76,31 +70,31 @@ const styles = StyleSheet.create({
     marginTop: 55,
     marginBottom: 5,
     marginLeft: 10,
-    alignItems: "center",
+    alignItems: 'center',
     elevation: 8,
-    backgroundColor: "white",
+    backgroundColor: 'white',
   },
   image: {
     width: width / 2 - 20 - 10,
     height: width / 2 - 20 - 30,
-    backgroundColor: "transparent",
-    position: "absolute",
+    backgroundColor: 'transparent',
+    position: 'absolute',
     top: -45,
   },
   card: {
     marginBottom: 10,
     height: width / 2 - 20 - 90,
-    backgroundColor: "transparent",
+    backgroundColor: 'transparent',
     width: width / 2 - 20 - 10,
   },
   title: {
-    fontWeight: "bold",
+    fontWeight: 'bold',
     fontSize: 14,
-    textAlign: "center",
+    textAlign: 'center',
   },
   price: {
     fontSize: 20,
-    color: "orange",
+    color: 'orange',
     marginTop: 10,
   },
 });

@@ -1,17 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import { View, Button } from 'react-native';
+import React, { useEffect, useState, useContext } from 'react';
+import { Text, View, Button } from 'react-native';
 import { Item, Picker } from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-
-import { connect } from 'react-redux';
-
 import FormContainer from '../../../Shared/Form/FormContainer';
 import Input from '../../../Shared/Form/Input';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import AuthGlobal from '../../../Context/store/AuthGlobal';
+
+import { connect } from 'react-redux';
+import Toast from 'react-native-toast-message';
 
 const countries = require('../../../assets/data/countries.json');
 
 const Checkout = (props) => {
+  const context = useContext(AuthGlobal);
+
   const [orderItems, setOrderItems] = useState();
   const [address, setAddress] = useState();
   const [address2, setAddress2] = useState();
@@ -22,14 +25,18 @@ const Checkout = (props) => {
   const [user, setUser] = useState();
 
   useEffect(() => {
-    let prods = [];
+    setOrderItems(props.cartItems);
 
-    props.cartItems.map((x) => {
-      const { addItemToCart, ...restProduct } = x.product;
-      prods.push({ product: restProduct });
-    });
-
-    setOrderItems(prods);
+    if (context.stateUser.isAuthenticated) {
+      setUser(context.stateUser.user.sub);
+    } else {
+      // props.navigation.navigate('Cart1');
+      Toast.show({
+        topOffset: 60,
+        type: 'error',
+        text1: 'Please Login to Checkout',
+      });
+    }
 
     return () => {
       setOrderItems();
@@ -59,7 +66,7 @@ const Checkout = (props) => {
       extraHeight={200}
       enableOnAndroid={true}
     >
-      <FormContainer title={'Shipping Adreess'}>
+      <FormContainer title={'Shipping Address'}>
         <Input
           placeholder={'Phone'}
           name={'phone'}
@@ -108,7 +115,6 @@ const Checkout = (props) => {
             })}
           </Picker>
         </Item>
-
         <View style={{ width: '80%', alignItems: 'center' }}>
           <Button title="Confirm" onPress={() => checkOut()} />
         </View>

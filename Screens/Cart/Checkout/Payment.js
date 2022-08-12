@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { View, Button } from "react-native";
+import React, { useState } from 'react';
+import { View, Button } from 'react-native';
 import {
   Container,
   Header,
@@ -13,19 +13,19 @@ import {
   Icon,
   Body,
   Title,
-} from "native-base";
+} from 'native-base';
 
 const methods = [
-  { name: "Cash on Delivery", value: 1 },
-  { name: "Bank Transfer", value: 2 },
-  { name: "Card Payment", value: 3 },
+  { name: 'Cash on Delivery', value: 1 },
+  { name: 'Bank Transfer', value: 2 },
+  { name: 'Card Payment', value: 3 },
 ];
 
 const paymentCards = [
-  { name: "Wallet", value: 1 },
-  { name: "Visa", value: 2 },
-  { name: "MasterCard", value: 3 },
-  { name: "Other", value: 4 },
+  { name: 'Wallet', value: 1 },
+  { name: 'Visa', value: 2 },
+  { name: 'MasterCard', value: 3 },
+  { name: 'Other', value: 4 },
 ];
 
 const Payment = (props) => {
@@ -57,10 +57,10 @@ const Payment = (props) => {
         {selected == 3 ? (
           <Picker
             mode="dropdown"
-            iosIcon={<Icon name={"arrow-down"} />}
-            headerStyle={{ backgroundColor: "orange" }}
-            headerBackButtonTextStyle={{ color: "#fff" }}
-            headerTitleStyle={{ color: "#fff" }}
+            iosIcon={<Icon name={'arrow-down'} />}
+            headerStyle={{ backgroundColor: 'orange' }}
+            headerBackButtonTextStyle={{ color: '#fff' }}
+            headerTitleStyle={{ color: '#fff' }}
             selectedValue={card}
             onValueChange={(x) => setCard(x)}
           >
@@ -69,10 +69,10 @@ const Payment = (props) => {
             })}
           </Picker>
         ) : null}
-        <View style={{ marginTop: 60, alignSelf: "center" }}>
+        <View style={{ marginTop: 60, alignSelf: 'center' }}>
           <Button
-            title={"Confirm"}
-            onPress={() => props.navigation.navigate("Confirm", { order })}
+            title={'Confirm'}
+            onPress={() => props.navigation.navigate('Confirm', { order })}
           />
         </View>
       </Content>

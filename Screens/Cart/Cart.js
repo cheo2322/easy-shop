@@ -1,5 +1,5 @@
-import React from "react";
-import { View, Dimensions, StyleSheet, TouchableOpacity } from "react-native";
+import React, { useState, useEffect, useContext } from 'react';
+import { View, Dimensions, StyleSheet, TouchableOpacity } from 'react-native';
 import {
   Container,
   Text,
@@ -9,33 +9,61 @@ import {
   ListItem,
   Thumbnail,
   Body,
-} from "native-base";
-import { SwipeListView } from "react-native-swipe-list-view";
-import Icon from "react-native-vector-icons/FontAwesome";
+} from 'native-base';
+import { SwipeListView } from 'react-native-swipe-list-view';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
-import CartItem from "./CartItem";
+import { connect } from 'react-redux';
+import axios from 'axios';
 
-import { connect } from "react-redux";
-import * as actions from "../../Redux/Actions/cartActions";
-import EasyButton from "../../Shared/StyledComponents/EasyButton";
+import CartItem from './CartItem';
+import * as actions from '../../Redux/Actions/cartActions';
+import EasyButton from '../../Shared/StyledComponents/EasyButton';
+import baseURL from '../../assets/common/baseUrl';
+import AuthGlobal from '../../Context/store/AuthGlobal';
 
-var { height, width } = Dimensions.get("window");
+var { height, width } = Dimensions.get('window');
 
 const Cart = (props) => {
-  var total = 0;
-  props.cartItems.forEach((cart) => {
-    return (total += cart.product.price);
-  });
+  const context = useContext(AuthGlobal);
 
-  total = Math.round(total * 100) / 100;
+  const [productUpdate, setProductUpdate] = useState();
+  const [totalPrice, setTotalPrice] = useState();
+  useEffect(() => {
+    getProducts();
+    return () => {
+      setProductUpdate();
+      setTotalPrice();
+    };
+  }, [props]);
+
+  const getProducts = () => {
+    var products = [];
+    props.cartItems.forEach((cart) => {
+      axios
+        .get(`${baseURL}products/${cart.product}`)
+        .then((data) => {
+          products.push(data.data);
+          setProductUpdate(products);
+          var total = 0;
+          products.forEach((product) => {
+            const price = (total += product.price);
+            setTotalPrice(price);
+          });
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    });
+  };
 
   return (
     <>
-      {props.cartItems.length ? (
+      {productUpdate ? (
         <Container>
-          <H1 style={{ alignSelf: "center" }}>Cart</H1>
+          <H1 style={{ alignSelf: 'center' }}>Cart</H1>
           <SwipeListView
-            data={props.cartItems}
+            data={productUpdate}
             renderItem={(data) => <CartItem item={data} />}
             renderHiddenItem={(data) => (
               <View style={styles.hiddenContainer}>
@@ -43,7 +71,7 @@ const Cart = (props) => {
                   style={styles.hiddenButton}
                   onPress={() => props.removeFromCart(data.item)}
                 >
-                  <Icon name="trash" color={"white"} size={30} />
+                  <Icon name="trash" color={'white'} size={30} />
                 </TouchableOpacity>
               </View>
             )}
@@ -57,27 +85,37 @@ const Cart = (props) => {
           />
           <View style={styles.bottomContainer}>
             <Left>
-              <Text style={styles.price}>$ {total}</Text>
+              <Text style={styles.price}>$ {totalPrice}</Text>
             </Left>
             <Right>
               <EasyButton danger medium onPress={() => props.clearCart()}>
-                <Text style={{ color: "white" }}>Clear</Text>
+                <Text style={{ color: 'white' }}>Clear</Text>
               </EasyButton>
             </Right>
             <Right>
+              {/* {context.stateUser.isAuthenticated ? ( */}
               <EasyButton
                 primary
                 medium
-                onPress={() => props.navigation.navigate("Checkout")}
+                onPress={() => props.navigation.navigate('Checkout')}
               >
-                <Text style={{ color: "white" }}>Checkout</Text>
+                <Text style={{ color: 'white' }}>Checkout</Text>
               </EasyButton>
+              {/* // ) : (
+              //   <EasyButton
+              //     secondary
+              //     medium
+              //     onPress={() => props.navigation.navigate('Login')}
+              //   >
+              //     <Text style={{ color: 'white' }}>Login</Text>
+              //   </EasyButton>
+              // )} */}
             </Right>
           </View>
         </Container>
       ) : (
         <Container style={styles.emptyContainer}>
-          <Text>Looks like you cart is empty</Text>
+          <Text>Looks like your cart is empty</Text>
           <Text>Add products to your cart to get started</Text>
         </Container>
       )}
@@ -102,31 +140,31 @@ const mapDispatchToProps = (dispatch) => {
 const styles = StyleSheet.create({
   emptyContainer: {
     height: height,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   bottomContainer: {
-    flexDirection: "row",
-    position: "absolute",
+    flexDirection: 'row',
+    position: 'absolute',
     bottom: 0,
     left: 0,
-    backgroundColor: "white",
+    backgroundColor: 'white',
     elevation: 20,
   },
   price: {
     fontSize: 18,
     margin: 20,
-    color: "red",
+    color: 'red',
   },
   hiddenContainer: {
     flex: 1,
-    justifyContent: "flex-end",
-    flexDirection: "row",
+    justifyContent: 'flex-end',
+    flexDirection: 'row',
   },
   hiddenButton: {
-    backgroundColor: "red",
-    justifyContent: "center",
-    alignItems: "flex-end",
+    backgroundColor: 'red',
+    justifyContent: 'center',
+    alignItems: 'flex-end',
     paddingRight: 25,
     height: 70,
     width: width / 1.2,
