@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { View, Button } from "react-native";
-import { Item, Picker } from "native-base";
-import Icon from "react-native-vector-icons/FontAwesome";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import React, { useEffect, useState } from 'react';
+import { View, Button } from 'react-native';
+import { Item, Picker } from 'native-base';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 
-import FormContainer from "../../../Shared/Form/FormContainer";
-import Input from "../../../Shared/Form/Input";
+import FormContainer from '../../../Shared/Form/FormContainer';
+import Input from '../../../Shared/Form/Input';
 
-const countries = require("../../../assets/data/countries.json");
+const countries = require('../../../assets/data/countries.json');
 
 const Checkout = (props) => {
   const [orderItems, setOrderItems] = useState();
@@ -22,7 +22,14 @@ const Checkout = (props) => {
   const [user, setUser] = useState();
 
   useEffect(() => {
-    setOrderItems(props.cartItems);
+    let prods = [];
+
+    props.cartItems.map((x) => {
+      const { addItemToCart, ...restProduct } = x.product;
+      prods.push({ product: restProduct });
+    });
+
+    setOrderItems(prods);
 
     return () => {
       setOrderItems();
@@ -30,7 +37,6 @@ const Checkout = (props) => {
   }, []);
 
   const checkOut = () => {
-    console.log("orders", orderItems);
     let order = {
       city,
       country,
@@ -39,12 +45,12 @@ const Checkout = (props) => {
       phone,
       shippingAddress1: address,
       shippingAddress2: address2,
-      status: "3",
+      status: '3',
       user,
       zip,
     };
 
-    props.navigation.navigate("Payment", { order: order });
+    props.navigation.navigate('Payment', { order: order });
   };
 
   return (
@@ -53,47 +59,47 @@ const Checkout = (props) => {
       extraHeight={200}
       enableOnAndroid={true}
     >
-      <FormContainer title={"Shipping Adreess"}>
+      <FormContainer title={'Shipping Adreess'}>
         <Input
-          placeholder={"Phone"}
-          name={"phone"}
+          placeholder={'Phone'}
+          name={'phone'}
           value={phone}
-          keyboardType={"numeric"}
+          keyboardType={'numeric'}
           onChangeText={(text) => setPhone(text)}
         />
         <Input
-          placeholder={"Shipping Address 1"}
-          name={"ShippingAddress1"}
+          placeholder={'Shipping Address 1'}
+          name={'ShippingAddress1'}
           value={address}
           onChangeText={(text) => setAddress(text)}
         />
         <Input
-          placeholder={"Shipping Address 2"}
-          name={"ShippingAddress2"}
+          placeholder={'Shipping Address 2'}
+          name={'ShippingAddress2'}
           value={address2}
           onChangeText={(text) => setAddress2(text)}
         />
         <Input
-          placeholder={"City"}
-          name={"city"}
+          placeholder={'City'}
+          name={'city'}
           value={city}
           onChangeText={(text) => setCity(text)}
         />
         <Input
-          placeholder={"Zip Code"}
-          name={"zip"}
+          placeholder={'Zip Code'}
+          name={'zip'}
           value={zip}
-          keyboardType={"numeric"}
+          keyboardType={'numeric'}
           onChangeText={(text) => setZip(text)}
         />
         <Item picker>
           <Picker
             mode="dropdown"
-            iosIcon={<Icon name="arrow-down" color={"#007aff"} />}
+            iosIcon={<Icon name="arrow-down" color={'#007aff'} />}
             style={{ width: undefined }}
             selectedValue={country}
             placeholder="Select your country"
-            placeholderStyle={{ color: "#007aff" }}
+            placeholderStyle={{ color: '#007aff' }}
             placeholderIconColor="#007aff"
             onValueChange={(e) => setCountry(e)}
           >
@@ -103,7 +109,7 @@ const Checkout = (props) => {
           </Picker>
         </Item>
 
-        <View style={{ width: "80%", alignItems: "center" }}>
+        <View style={{ width: '80%', alignItems: 'center' }}>
           <Button title="Confirm" onPress={() => checkOut()} />
         </View>
       </FormContainer>
