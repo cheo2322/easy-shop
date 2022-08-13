@@ -15,6 +15,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 import { connect } from 'react-redux';
 import axios from 'axios';
+import Toast from 'react-native-toast-message';
 
 import CartItem from './CartItem';
 import * as actions from '../../Redux/Actions/cartActions';
@@ -29,6 +30,7 @@ const Cart = (props) => {
 
   const [productUpdate, setProductUpdate] = useState();
   const [totalPrice, setTotalPrice] = useState();
+
   useEffect(() => {
     getProducts();
     return () => {
@@ -93,23 +95,22 @@ const Cart = (props) => {
               </EasyButton>
             </Right>
             <Right>
-              {/* {context.stateUser.isAuthenticated ? ( */}
               <EasyButton
                 primary
                 medium
-                onPress={() => props.navigation.navigate('Checkout')}
+                onPress={() => {
+                  context.stateUser.isAuthenticated
+                    ? props.navigation.navigate('Checkout')
+                    : (props.navigation.navigate('User'),
+                      Toast.show({
+                        topOffset: 60,
+                        type: 'error',
+                        text1: 'Please Login to Checkout',
+                      }));
+                }}
               >
                 <Text style={{ color: 'white' }}>Checkout</Text>
               </EasyButton>
-              {/* // ) : (
-              //   <EasyButton
-              //     secondary
-              //     medium
-              //     onPress={() => props.navigation.navigate('Login')}
-              //   >
-              //     <Text style={{ color: 'white' }}>Login</Text>
-              //   </EasyButton>
-              // )} */}
             </Right>
           </View>
         </Container>
