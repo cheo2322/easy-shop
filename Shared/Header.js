@@ -1,11 +1,11 @@
-import React from "react";
-import { StyleSheet, Image, SafeAreaView, View } from "react-native";
+import React from 'react';
+import { StyleSheet, Image, SafeAreaView, View } from 'react-native';
 
 const Header = () => {
   return (
     <SafeAreaView style={styles.header}>
       <Image
-        source={require("../assets/Banner.png")}
+        source={require('../assets/Banner.png')}
         resizeMode="contain"
         style={{ height: 50 }}
       />
@@ -15,11 +15,11 @@ const Header = () => {
 
 const styles = StyleSheet.create({
   header: {
-    width: "100%",
-    flexDirection: "row",
-    alignContent: "center",
-    justifyContent: "center",
-    padding: 20,
+    width: '100%',
+    flexDirection: 'row',
+    alignContent: 'center',
+    justifyContent: 'center',
+    padding: 10,
   },
 });
 
