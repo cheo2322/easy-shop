@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   View,
   StyleSheet,
@@ -8,12 +8,12 @@ import {
   TouchableOpacity,
   Dimensions,
   Modal,
-} from "react-native";
-import Icon from "react-native-vector-icons/FontAwesome";
+} from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
-import EasyButton from "../../Shared/StyledComponents/EasyButton";
+import EasyButton from '../../Shared/StyledComponents/EasyButton';
 
-var { width } = Dimensions.get("window");
+var { width } = Dimensions.get('window');
 
 const ListItem = (props) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -36,20 +36,20 @@ const ListItem = (props) => {
                 setModalVisible(false);
               }}
               style={{
-                alignSelf: "flex-end",
-                position: "absolute",
+                alignSelf: 'flex-end',
+                position: 'absolute',
                 top: 5,
                 right: 10,
               }}
             >
-              <Icon name="close" color={"black"} size={20} />
+              <Icon name="close" color={'black'} size={20} />
             </TouchableOpacity>
 
             <EasyButton
               medium
               secondary
               onPress={() => {
-                props.navigation.navigate("ProductForm", { item: props }),
+                props.navigation.navigate('ProductForm', { item: props }),
                   setModalVisible(false);
               }}
             >
@@ -67,13 +67,16 @@ const ListItem = (props) => {
       </Modal>
       <TouchableOpacity
         onPress={() => {
-          props.navigation.navigate("Product Detail", { item: props });
+          const { navigation, ...restProps } = props;
+          delete restProps.delete;
+
+          props.navigation.navigate('Product Detail', { item: restProps });
         }}
         onLongPress={() => setModalVisible(true)}
         style={[
           styles.container,
           {
-            backgroundColor: props.index % 2 == 0 ? "white" : "gainsboro",
+            backgroundColor: props.index % 2 == 0 ? 'white' : 'gainsboro',
           },
         ]}
       >
@@ -81,7 +84,7 @@ const ListItem = (props) => {
           source={{
             uri: props.image
               ? props.image
-              : "https://cdn.pixabay.com/photo/2012/04/01/17/29/box-23649_960_720.png",
+              : 'https://cdn.pixabay.com/photo/2012/04/01/17/29/box-23649_960_720.png',
           }}
           resizeMode="contain"
           style={styles.image}
@@ -101,7 +104,7 @@ const ListItem = (props) => {
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "row",
+    flexDirection: 'row',
     padding: 5,
     width: width,
   },
@@ -112,23 +115,23 @@ const styles = StyleSheet.create({
     margin: 2,
   },
   item: {
-    flexWrap: "wrap",
+    flexWrap: 'wrap',
     margin: 3,
     width: width / 6,
   },
   centeredView: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     marginTop: 22,
   },
   modalView: {
     margin: 20,
-    backgroundColor: "white",
+    backgroundColor: 'white',
     borderRadius: 20,
     padding: 35,
-    alignItems: "center",
-    shadowColor: "#000",
+    alignItems: 'center',
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 2,
@@ -138,8 +141,8 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   textStyle: {
-    color: "white",
-    fontWeight: "bold",
+    color: 'white',
+    fontWeight: 'bold',
   },
 });
 

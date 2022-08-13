@@ -13,36 +13,28 @@ var { width, height } = Dimensions.get('window');
 const Confirm = (props) => {
   const finalOrder = props.route.params;
 
-  // Add this
-  const [productUpdate, setProductUpdate] = useState();
+  const [productUpdate, setProductUpdate] = useState([]);
 
   useEffect(() => {
     if (finalOrder) {
       getProducts(finalOrder);
     }
-
-    return () => {
-      setProductUpdate();
-    };
   }, [props]);
 
-  // Add this
-  const getProducts = (x) => {
+  const getProducts = async (x) => {
     const order = x.order.order;
 
     var products = [];
     if (order) {
-      order.orderItems.forEach((cart) => {
-        axios
-          .get(`${baseURL}products/${cart.product}`)
-          .then((data) => {
-            products.push(data.data);
-            setProductUpdate(products);
-          })
-          .catch((e) => {
-            console.log(e);
-          });
-      });
+      for (const cart of order.orderItems) {
+        let responseData = await axios.get(
+          `${baseURL}products/${cart.product}`
+        );
+
+        products.push(responseData.data);
+      }
+
+      setProductUpdate(products);
     }
   };
 
