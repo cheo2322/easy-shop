@@ -5,10 +5,10 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 import axios from 'axios';
 import Toast from 'react-native-toast-message';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import TrafficLight from './StyledComponents/TrafficLight';
 import EasyButton from './StyledComponents/EasyButton';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import baseURL from '../assets/common/baseUrl';
 
 const codes = [
@@ -25,11 +25,31 @@ const OrderCard = (props) => {
   const [cardColor, setCardColor] = useState();
 
   useEffect(() => {
-    if (props.status == '3') {
+    if (props.editMode) {
+      AsyncStorage.getItem('jwt')
+        .then((res) => {
+          setToken(res);
+        })
+        .catch((error) => console.log(error));
+    }
+
+    updateStatus(props.status);
+
+    return () => {
+      setOrderStatus();
+      setStatusText();
+      setCardColor();
+    };
+  }, []);
+
+  const updateStatus = (x) => {
+    setStatusChange(x);
+
+    if (x == '3') {
       setOrderStatus(<TrafficLight unavailable></TrafficLight>);
       setStatusText('pending');
       setCardColor('#E74C3C');
-    } else if (props.status == '2') {
+    } else if (x == '2') {
       setOrderStatus(<TrafficLight limited></TrafficLight>);
       setStatusText('shipped');
       setCardColor('#F1C40F');
@@ -38,13 +58,52 @@ const OrderCard = (props) => {
       setStatusText('delivered');
       setCardColor('#2ECC71');
     }
+  };
 
-    return () => {
-      setOrderStatus();
-      setStatusText();
-      setCardColor();
+  const updateOrder = () => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     };
-  }, []);
+
+    const order = {
+      city: props.city,
+      country: props.country,
+      dateOrdered: props.dateOrdered,
+      id: props.id,
+      orderItems: props.orderItems,
+      phone: props.phone,
+      shippingAddress1: props.shippingAddress1,
+      shippingAddress2: props.shippingAddress2,
+      status: statusChange,
+      totalPrice: props.totalPrice,
+      user: props.user,
+      zip: props.zip,
+    };
+
+    axios
+      .put(`${baseURL}orders/${props.id}`, order, config)
+      .then((res) => {
+        if (res.status == 200 || res.status == 201) {
+          updateStatus(statusChange);
+
+          Toast.show({
+            topOffset: 60,
+            type: 'success',
+            text1: 'Order Edited',
+          });
+        }
+      })
+      .catch((error) => {
+        Toast.show({
+          topOffset: 60,
+          type: 'error',
+          text1: 'Something went wrong',
+          text2: 'Please try again',
+        });
+      });
+  };
 
   return (
     <View style={[{ backgroundColor: cardColor }, styles.container]}>
@@ -68,27 +127,28 @@ const OrderCard = (props) => {
           <Text>Price: </Text>
           <Text style={styles.price}>$ {props.totalPrice}</Text>
         </View>
-
-        <Picker
-          mode="dropdown"
-          iosIcon={<Icon color={'#007aff'} name="arrow-down" />}
-          style={{ width: undefined }}
-          selectedValue={statusChange}
-          placeholder="Change Status"
-          placeholderIconColor={{ color: '#007aff' }}
-          onValueChange={(e) => setStatusChange(e)}
-        >
-          {codes.map((c) => {
-            return <Picker.Item key={c.code} label={c.name} value={c.code} />;
-          })}
-        </Picker>
-        <EasyButton
-          secondary
-          large
-          //   onPress={() => updateOrder()}
-        >
-          <Text style={{ color: 'white' }}>Update</Text>
-        </EasyButton>
+        {props.editMode ? (
+          <View>
+            <Picker
+              mode="dropdown"
+              iosIcon={<Icon color={'#007aff'} name="arrow-down" />}
+              style={{ width: undefined }}
+              selectedValue={statusChange}
+              placeholder="Change Status"
+              placeholderIconColor={{ color: '#007aff' }}
+              onValueChange={(e) => setStatusChange(e)}
+            >
+              {codes.map((c) => {
+                return (
+                  <Picker.Item key={c.code} label={c.name} value={c.code} />
+                );
+              })}
+            </Picker>
+            <EasyButton secondary large onPress={() => updateOrder()}>
+              <Text style={{ color: 'white' }}>Update</Text>
+            </EasyButton>
+          </View>
+        ) : null}
       </View>
     </View>
   );
