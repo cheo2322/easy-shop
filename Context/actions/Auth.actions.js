@@ -1,40 +1,40 @@
-import jwt_decode from "jwt-decode";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import Toast from "react-native-toast-message";
-import baseURL from "../../assets/common/baseUrl";
+import jwt_decode from 'jwt-decode';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Toast from 'react-native-toast-message';
+import baseURL from '../../assets/common/baseUrl';
 
-export const SET_CURRENT_USER = "SET_CURRENT_USER";
+export const SET_CURRENT_USER = 'SET_CURRENT_USER';
 
 export const loginUser = (user, dispatch) => {
   fetch(`${baseURL}users/login`, {
-    method: "POST",
+    method: 'POST',
     body: JSON.stringify(user),
     headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
     },
   })
     .then((res) => res.json())
     .then((data) => {
       if (data) {
         const token = data.token;
-        AsyncStorage.setItem("jwt", token);
+        AsyncStorage.setItem('jwt', token);
 
         const decoded = jwt_decode(token);
         dispatch(setCurrentUser(decoded, user));
 
-        console.log("User logged successfully.");
+        console.log('User logged successfully.');
       } else {
         logoutUser(dispatch);
       }
     })
     .catch((err) => {
-      console.log(err);
+      console.error(err);
 
       Toast.show({
         topOffset: 60,
-        type: "error",
-        text1: "Please provide correct credentials",
+        type: 'error',
+        text1: 'Please provide correct credentials',
       });
 
       logoutUser(dispatch);
@@ -43,11 +43,11 @@ export const loginUser = (user, dispatch) => {
 
 export const getUserProfile = (id) => {
   fetch(`${baseURL}users/${id}`, {
-    method: "GET",
+    method: 'GET',
     body: JSON.stringify(user),
     headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
     },
   })
     .then((res) => res.json)
@@ -55,7 +55,7 @@ export const getUserProfile = (id) => {
 };
 
 export const logoutUser = (dispatch) => {
-  AsyncStorage.removeItem("jwt");
+  AsyncStorage.removeItem('jwt');
   dispatch(setCurrentUser({}));
 };
 

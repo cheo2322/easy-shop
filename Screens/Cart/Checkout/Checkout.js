@@ -28,7 +28,7 @@ const Checkout = (props) => {
     setOrderItems(props.cartItems);
 
     if (context.stateUser.isAuthenticated) {
-      setUser(context.stateUser.user.sub);
+      setUser(context.stateUser.user.userId);
     } else {
       props.navigation.navigate('Cart1');
       Toast.show({
@@ -46,7 +46,7 @@ const Checkout = (props) => {
   const checkOut = () => {
     let order = {
       city,
-      country,
+      country: 'Ecuador',
       dateOrdered: Date.now(),
       orderItems,
       phone,
@@ -99,7 +99,7 @@ const Checkout = (props) => {
           keyboardType={'numeric'}
           onChangeText={(text) => setZip(text)}
         />
-        <Item picker>
+        {/* <Item picker>
           <Picker
             mode="dropdown"
             iosIcon={<Icon name="arrow-down" color={'#007aff'} />}
@@ -114,7 +114,7 @@ const Checkout = (props) => {
               return <Picker.Item key={c.code} label={c.name} value={c.name} />;
             })}
           </Picker>
-        </Item>
+        </Item> */}
         <View style={{ width: '80%', alignItems: 'center' }}>
           <Button title="Confirm" onPress={() => checkOut()} />
         </View>
