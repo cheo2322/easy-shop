@@ -1,24 +1,24 @@
-import React, { useEffect, useContext, useState } from "react";
-import { View, Text, StyleSheet, Button } from "react-native";
+import React, { useEffect, useContext, useState } from 'react';
+import { View, Text, StyleSheet, Button } from 'react-native';
 
-import FormContainer from "../../Shared/Form/FormContainer";
-import Input from "../../Shared/Form/Input";
-import Error from "../../Shared/Error";
+import FormContainer from '../../Shared/Form/FormContainer';
+import Input from '../../Shared/Form/Input';
+import Error from '../../Shared/Error';
 
 // Context
-import AuthGlobal from "../../Context/store/AuthGlobal";
-import { loginUser } from "../../Context/actions/Auth.actions";
-import EasyButton from "../../Shared/StyledComponents/EasyButton";
+import AuthGlobal from '../../Context/store/AuthGlobal';
+import { loginUser } from '../../Context/actions/Auth.actions';
+import EasyButton from '../../Shared/StyledComponents/EasyButton';
 
 const Login = (props) => {
   const context = useContext(AuthGlobal);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
   useEffect(() => {
     if (context.stateUser.isAuthenticated === true) {
-      props.navigation.navigate("UserProfile");
+      props.navigation.navigate('UserProfile');
     }
   }, [context.stateUser.isAuthenticated]);
 
@@ -28,26 +28,26 @@ const Login = (props) => {
       password,
     };
 
-    if (email === "" || password === "") {
-      setError("Please, fill in your credentials");
+    if (email === '' || password === '') {
+      setError('Please, fill in your credentials');
     } else {
       loginUser(user, context.dispatch);
     }
   };
 
   return (
-    <FormContainer title={"Login"}>
+    <FormContainer title={'Login'}>
       <Input
-        placeholder={"Enter email"}
-        name={"email"}
-        id={"email"}
+        placeholder={'Enter email'}
+        name={'email'}
+        id={'email'}
         value={email}
         onChangeText={(text) => setEmail(text.toLowerCase())}
       />
       <Input
-        placeholder={"Enter password"}
-        name={"password"}
-        id={"password"}
+        placeholder={'Enter password'}
+        name={'password'}
+        id={'password'}
         secureTextEntry={true}
         value={password}
         onChangeText={(text) => setPassword(text)}
@@ -55,7 +55,7 @@ const Login = (props) => {
       <View style={styles.buttonGroup}>
         {error ? <Error message={error} /> : null}
         <EasyButton large primary onPress={() => handleSubmit()}>
-          <Text style={{ color: "white" }}>Login</Text>
+          <Text style={{ color: 'white' }}>Login</Text>
         </EasyButton>
       </View>
       <View style={[{ marginTop: 40 }, styles.buttonGroup]}>
@@ -63,9 +63,9 @@ const Login = (props) => {
         <EasyButton
           large
           secondary
-          onPress={() => props.navigation.navigate("Register")}
+          onPress={() => props.navigation.navigate('Register')}
         >
-          <Text style={{ color: "white" }}>Register</Text>
+          <Text style={{ color: 'white' }}>Register</Text>
         </EasyButton>
       </View>
     </FormContainer>
@@ -74,12 +74,12 @@ const Login = (props) => {
 
 const styles = StyleSheet.create({
   buttonGroup: {
-    width: "80%",
-    alignItems: "center",
+    width: '80%',
+    alignItems: 'center',
   },
   middleText: {
     marginBottom: 20,
-    alignSelf: "center",
+    alignSelf: 'center',
   },
 });
 
