@@ -50,13 +50,19 @@ export const getUserProfile = (id) => {
       'Content-Type': 'application/json',
     },
   })
-    .then((res) => res.json)
+    .then((res) => res.json())
     .then((data) => console.log(data));
 };
 
 export const logoutUser = (dispatch) => {
   AsyncStorage.removeItem('jwt');
   dispatch(setCurrentUser({}));
+
+  Toast.show({
+    topOffset: 60,
+    type: 'success',
+    text1: 'User signed out',
+  });
 };
 
 export const setCurrentUser = (decoded, user) => {

@@ -23,31 +23,31 @@ const UserProfile = (props) => {
         context.stateUser.isAuthenticated === null
       ) {
         props.navigation.navigate('Login');
+      } else {
+        AsyncStorage.getItem('jwt')
+          .then((res) => {
+            axios
+              .get(`${baseURL}users/${context.stateUser.user.userId}`, {
+                headers: { Authorization: `Bearer ${res}` },
+              })
+              .then((user) => {
+                setUserProfile(user.data);
+              });
+          })
+          .catch((error) => console.error(error));
+
+        axios
+          .get(`${baseURL}orders`)
+          .then((x) => {
+            const data = x.data;
+            const userOrders = data.filter(
+              (order) => order.user._id === context.stateUser.user.userId
+            );
+
+            setOrders(userOrders);
+          })
+          .catch((error) => console.error(error));
       }
-
-      AsyncStorage.getItem('jwt')
-        .then((res) => {
-          axios
-            .get(`${baseURL}users/${context.stateUser.user.userId}`, {
-              headers: { Authorization: `Bearer ${res}` },
-            })
-            .then((user) => {
-              setUserProfile(user.data);
-            });
-        })
-        .catch((error) => console.error(error));
-
-      axios
-        .get(`${baseURL}orders`)
-        .then((x) => {
-          const data = x.data;
-          const userOrders = data.filter(
-            (order) => order.user._id === context.stateUser.user.userId
-          );
-
-          setOrders(userOrders);
-        })
-        .catch((error) => console.error(error));
 
       return () => {
         setUserProfile();
